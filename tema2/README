@@ -1,0 +1,71 @@
+-------------------------------------------------------------------------------
+                            Tema 2. IOCLA. STEGANO
+                            Ciudin Antonela. 325CB
+-------------------------------------------------------------------------------
+Task1:
+
+    Pentru acest task am facut jump la label-ul "bruteforce" unde am luat ebx 
+    contor pe linii si ecx contor pe un rand. Conform formulei: 
+		img_width*4*contor_linii+4*contor_rand, 
+    am determinat de fiecare data indexul elementului.
+
+    In prealabil imi stochez pe stiva contoarele si cu "ecx" parcurg numerele 
+    din intervalul [0,255]. Fiecare numar face "xor" cu elementul curent din 
+    matrice, daca rezultatul este 'r', se trece la urmatorul element din 
+    matrice si se face xor cu acelasi numar, daca rezultatul operatiei "xor" nu
+    e 'e', se trece inapoi la verificarea lui 'r' cu urmatorul numar din 
+    intervalul [0,255], daca este 'e', se trece mai departe. Se procedeaza 
+    similar pana se ajunge cu un numar (cheia) la ultima litera din 'revient'. 
+
+    De la ultima litera se sare la jump-ul pentru codificare "key_found". Am 
+    stocat in "eax" linia pe bitii 0..15 si cheia pe bitii 16..31. Se iese din
+    "functia" respectiva, apoi in main printez mesajul decriptat cu cheia 
+    primita, cheia si linia.
+
+-------------------------------------------------------------------------------
+Task2:
+
+    Initial determin cheia si linia cu ajutorul "bruteforce"-ului de la task-ul
+    anterior. Apoi fac jump la "xor_bruteforce" unde aplic comanda "xor" dintre
+    cheie, stocata in "esi" si toate elementele matricii.
+
+    Incepand cu urmatoarea linie decat cea pe care se afla mesajul adaug 
+    mesajul meu stocat in section .data. Calculez noua cheie conform formulei 
+    date si o aplic matricii cu comanda xor. La final printez imaginea cu 
+    functia din schelet.
+
+-------------------------------------------------------------------------------
+Task3:
+
+    Primul lucru pe care il fac, accesez argumentele optionale, adica sirul si
+    indexul. Apelez "atoi" pentru index, pentru a-l converti din string in 
+    numar. Fac jump la "morse". In "functia" respectiva, parcurg sirul primit 
+    ca argument, accesand cate un element cu ajutorul comenzii movzx care 
+    extrage exact un byte. 
+
+    Fiindca alfabetul Morse nu are o regularitate sau o logica dupa care poate 
+    fi generat mai rapid, am implementat direct fiecare codificare a fiecarei 
+    litere, cifre si a virgulei. Concomitent inserand in matrice '-' sau '.' la
+    fiecare 4 octeti, in dependenta de codificare. Dupa fiecare litera cifra 
+    sau virgula verific daca rumatorul element din sir este nul sau nu, daca nu
+    e nul atunci adaug si un spatiu. La sfarsit am adaugat terminatorul de 
+    string '0x00'.
+
+-------------------------------------------------------------------------------
+Task6:
+
+    Pentru task-ul respectiv nu am reusit sa printez cu "print_image" totul 
+    inafara de matrice. De aceea, odata ce fac jump la "blur" printez tipul 
+    fisierului, latimea si inaltimea. Dupa parcurg matricea si determin 
+    valoarea maxima din aceasta. O printez. Printez prima linie din matrice, 
+    deoarece aceasta ramane nemodificata.
+
+    In loop1_blur printez mereu primul si ultimul element de pe fiecare linie, 
+    la fel nemodificate. Si odata cu a doua linie si al doilea element incep sa
+    "blurez" imaginea. In eax stochez valorile elementului curent, a celui din 
+    stanga, din dreapta, de jos si de sus, toate fiind neschimbate, deoarece 
+    insusi matricea ramane "neatinsa". Il divid la 5 si il printez. Apoi trec 
+    la urmatorul element. Procedez similar pana la ultima linia. Dupa care 
+    printez si ultima linie nemodificata.
+
+-------------------------------------------------------------------------------
